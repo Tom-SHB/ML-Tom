@@ -36,11 +36,45 @@ while True:
 		for face_encoding in face_encodings:
 
 
-			face_data.append({"name":name,"face":frame[y:y+h,x:x+w],"face_encodin","access":access_list})
+			face_data.append({"name":name,"face":frame[y:y+h,x:x+w],"face_encodin":face_encoding,"access":access_list})
 
 			print(f"Capture {capture_count+1} complete!")
 
 	cv2.imshow('Register Face',frame)
 	
+	if cv2.waitKey(1) & 0xFF == ord('s'):
+		capture_count +=1
+		print(f"Capture {capture_count+1} complete!")
+
+	if capture_count>= 5:
+  		break 
+
+	
+cap.relase()
+cv2.destroyALlWindows()
+
+now = datetime.now()
+file_name = f"face/{now.strftime('%Y-%m-%d-%H-%M-%S')}-{name}.pickle"
+with open(file_name,'wb') as f:
+	pickle.dump(face_data,f)
+print(f"Face data for '{name}'saved successfully ")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
